@@ -4,7 +4,7 @@ vv is a [Go](http://www.golang.org) implementation of a delta-based CRDT map as 
 
 Usage:
 
-```
+```go
 package main
 
 import (
