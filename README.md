@@ -11,7 +11,7 @@ import (
 	"fmt"
 	"strings"
 	"testing"
-    "github.com/hankjacobs/vv"
+ 	"github.com/hankjacobs/vv"
 )
 
 func main() {
@@ -36,11 +36,11 @@ func main() {
 	tim.Set("lunch", "chicken")
 
 	// get records that Bob has but Alice doesn't
-    delta := bob.Delta(alice.Version())
+	delta := bob.Delta(alice.Version())
 	alice.Merge(delta)
 
 	// get records that Tim has but Alice doesn't
-    delta = bob.Delta(alice.Version())
+	delta = bob.Delta(alice.Version())
 	alice.Merge(delta)
 
 	// sync bob
