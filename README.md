@@ -15,19 +15,15 @@ import (
 )
 
 func main() {
-	aliceID := vv.ID("alice")
-	bobID := vv.ID("bob")
-	timID := vv.ID("tim")
-
 	lexicographicResolver := func(key string, left, right vv.Record) bool {
 		leftVal := left.Value.(string)
 		rightVal := right.Value.(string)
 		return strings.Compare(leftVal, rightVal) > 0 // choose left if lexicographically greater
 	}
 
-	alice := vv.New(aliceID, lexicographicResolver)
-	bob := vv.New(bobID, lexicographicResolver)
-	tim := vv.New(timID, lexicographicResolver)
+	alice := vv.New("alice", lexicographicResolver)
+	bob := vv.New("bob", lexicographicResolver)
+	tim := vv.New("tim", lexicographicResolver)
 
 	// concurrently update everyone -- causes a conflict, should all resolve to "turkey" since
 	// lexicographically greatest
