@@ -10,9 +10,9 @@ type ID string
 // VersionVector vector of node versions keyed by their ID
 type VersionVector map[ID]uint64
 
-// Dot is a version vector dot used to represent an event
+// VVDot is a version vector dot used to represent an event
 // with the specified version from a node with SourceID
-type Dot struct {
+type VVDot struct {
 	SourceID ID
 	Version  uint64
 }
@@ -28,7 +28,7 @@ type ChooseLeftConflictResolver func(key string, left, right Record) bool
 type Record struct {
 	Key   string
 	Value interface{}
-	Dot   Dot
+	Dot   VVDot
 }
 
 // Delta are the most recent records seen between since and current
@@ -63,7 +63,7 @@ func (v *Map) Get(key string) interface{} {
 // Set sets a value for a key
 func (v *Map) Set(key string, value interface{}) {
 	v.version[v.me]++
-	record := Record{Key: key, Value: value, Dot: Dot{SourceID: v.me, Version: v.version[v.me]}}
+	record := Record{Key: key, Value: value, Dot: VVDot{SourceID: v.me, Version: v.version[v.me]}}
 	v.storage[key] = record
 }
 
