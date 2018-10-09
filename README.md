@@ -14,15 +14,15 @@ import (
 )
 
 func main() {
-	lexicographicResolver := func(key string, left, right vv.Record) bool {
+	lexicographicConflictResolver := func(key string, left, right vv.Record) bool {
 		leftVal := left.Value.(string)
 		rightVal := right.Value.(string)
 		return strings.Compare(leftVal, rightVal) > 0 // choose left if lexicographically greater
 	}
 
-	alice := vv.New("alice", lexicographicResolver)
-	bob := vv.New("bob", lexicographicResolver)
-	tim := vv.New("tim", lexicographicResolver)
+	alice := vv.New("alice", lexicographicConflictResolver)
+	bob := vv.New("bob", lexicographicConflictResolver)
+	tim := vv.New("tim", lexicographicConflictResolver)
 
 	// concurrently update everyone -- causes a conflict, should all resolve to "turkey" since
 	// lexicographically greatest
@@ -35,7 +35,7 @@ func main() {
 	alice.Merge(delta)
 
 	// get records that Tim has but Alice doesn't
-	delta = bob.Delta(alice.Version())
+	delta = tim.Delta(alice.Version())
 	alice.Merge(delta)
 
 	// sync bob
