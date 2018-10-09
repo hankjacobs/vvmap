@@ -1,8 +1,8 @@
-/*Package vv is an implementation of a delta-based CRDT map as written about in
+/*Package vvmap is an implementation of a delta-based CRDT map as written about in
 "∆-CRDTs: Making δ-CRDTs Delta-Based" (http://nova-lincs.di.fct.unl.pt/system/publication_files/files/000/000/666/original/a12-van_der_linde.pdf?1483708753)
 and "Dotted Version Vectors: Logical Clocks for Optimistic Replication" (https://arxiv.org/pdf/1011.5808.pdf).
 */
-package vv
+package vvmap
 
 // ID of node. An ID must be unique across all nodes sharing the map.
 type ID string
@@ -46,7 +46,7 @@ type Map struct {
 	me       ID
 }
 
-// New returns a new VVMap with the specified ID and conflict resolver
+// New returns a new Map with the specified ID and conflict resolver
 func New(id ID, resolver ChooseLeftConflictResolver) *Map {
 	return &Map{resolver: resolver, storage: make(map[string]Record), version: make(VersionVector), me: id}
 }

@@ -1,4 +1,4 @@
-package vv
+package vvmap
 
 import (
 	"fmt"

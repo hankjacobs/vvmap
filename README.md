@@ -1,6 +1,6 @@
-# vv [![GoDoc](https://godoc.org/github.com/hankjacobs/vv?status.png)](https://godoc.org/github.com/hankjacobs/vv)
+# vvmap [![GoDoc](https://godoc.org/github.com/hankjacobs/vv?status.png)](https://godoc.org/github.com/hankjacobs/vv)
 
-vv is a [Go](http://www.golang.org) implementation of a delta-based CRDT map as written about in ["∆-CRDTs: Making δ-CRDTs Delta-Based"](http://nova-lincs.di.fct.unl.pt/system/publication_files/files/000/000/666/original/a12-van_der_linde.pdf?1483708753), ["Dotted Version Vectors: Logical Clocks for Optimistic Replication"](https://arxiv.org/pdf/1011.5808.pdf), and Tyler McMullen's excellent talk ["The Anatomy of a Distributed System"](https://www.infoq.com/presentations/health-distributed-system).  
+vvmap is a [Go](http://www.golang.org) implementation of a delta-based CRDT map as written about in ["∆-CRDTs: Making δ-CRDTs Delta-Based"](http://nova-lincs.di.fct.unl.pt/system/publication_files/files/000/000/666/original/a12-van_der_linde.pdf?1483708753), ["Dotted Version Vectors: Logical Clocks for Optimistic Replication"](https://arxiv.org/pdf/1011.5808.pdf), and Tyler McMullen's excellent talk ["The Anatomy of a Distributed System"](https://www.infoq.com/presentations/health-distributed-system).  
 
 Usage:
 
@@ -10,19 +10,19 @@ package main
 import (
 	"fmt"
 	"strings"
- 	"github.com/hankjacobs/vv"
+ 	"github.com/hankjacobs/vvmap"
 )
 
 func main() {
-	lexicographicConflictResolver := func(key string, left, right vv.Record) bool {
+	lexicographicConflictResolver := func(key string, left, right vvmap.Record) bool {
 		leftVal := left.Value.(string)
 		rightVal := right.Value.(string)
 		return strings.Compare(leftVal, rightVal) > 0 // choose left if lexicographically greater
 	}
 
-	alice := vv.New("alice", lexicographicConflictResolver)
-	bob := vv.New("bob", lexicographicConflictResolver)
-	tim := vv.New("tim", lexicographicConflictResolver)
+	alice := vvmap.New("alice", lexicographicConflictResolver)
+	bob := vvmap.New("bob", lexicographicConflictResolver)
+	tim := vvmap.New("tim", lexicographicConflictResolver)
 
 	// concurrently update everyone -- causes a conflict, should all resolve to "turkey" since
 	// lexicographically greatest
